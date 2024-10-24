@@ -99,32 +99,6 @@ namespace UnitTests
             Assert.AreEqual(Parser.Parse("-((10 + 20) * 5) * 30").Eval(null), -4500);
         }
 
-        /*class MyContext : IContext
-        {
-            public MyContext(double r)
-            {
-                _r = r;
-            }
-
-            double _r;
-
-            public double ResolveVariable(string name)
-            {
-                switch (name)
-                {
-                    case "pi": return Math.PI;
-                    case "r": return _r;
-                }
-
-                throw new InvalidDataException($"Unknown variable: '{name}'");
-            }
-
-            public double CallFunction(string name, double[] arguments)
-            {
-                throw new NotImplementedException();
-            }
-        }*/
-
         [Fact]
         public void Variables()
         {
