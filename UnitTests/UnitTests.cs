@@ -2,7 +2,6 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SimpleExpressionEngine;
-
 namespace UnitTests
 {
     [TestClass]
