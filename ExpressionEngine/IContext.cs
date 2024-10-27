@@ -8,7 +8,7 @@ namespace ExpressionEngine
 {
     public interface IContext
     {
-        double ResolveVariable(string name);
-        double CallFunction(string name, double[] arguments);
+        decimal ResolveVariable(string name);
+        decimal CallFunction(string name, decimal[] arguments);
     }
 }

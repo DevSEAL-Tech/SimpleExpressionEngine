@@ -36,7 +36,7 @@ namespace ExpressionEngine
             while (true)
             {
                 // Work out the operator
-                Func<double, double, double> op = null;
+                Func<decimal, decimal, decimal> op = null;
                 if (_tokenizer.Token == Token.Add)
                 {
                     op = (a, b) => a + b;
@@ -70,7 +70,7 @@ namespace ExpressionEngine
             while (true)
             {
                 // Work out the operator
-                Func<double, double, double> op = null;
+                Func<decimal, decimal, decimal> op = null;
                 if (_tokenizer.Token == Token.Multiply)
                 {
                     op = (a, b) => a * b;

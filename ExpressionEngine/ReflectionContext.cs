@@ -10,15 +10,15 @@ namespace ExpressionEngine
     public class ReflectionContext : IContext
     {
         private readonly object _targetObject;
-        private readonly IDictionary<string, double> _dictionary;
+        private readonly IDictionary<string, decimal> _dictionary;
 
         public ReflectionContext(object targetObject)
         {
             _targetObject = targetObject;
-            _dictionary = targetObject as IDictionary<string, double>;
+            _dictionary = targetObject as IDictionary<string, decimal>;
         }
 
-        public double ResolveVariable(string name)
+        public decimal ResolveVariable(string name)
         {
             if (_dictionary != null)
             {
@@ -33,10 +33,10 @@ namespace ExpressionEngine
             if (pi == null)
                 throw new InvalidDataException($"Unknown variable: '{name}'");
 
-            return (double)pi.GetValue(_targetObject);
+            return (decimal)pi.GetValue(_targetObject);
         }
 
-        public double CallFunction(string name, double[] arguments)
+        public decimal CallFunction(string name, decimal[] arguments)
         {
             if (_dictionary != null)
             {
@@ -48,7 +48,7 @@ namespace ExpressionEngine
                 throw new InvalidDataException($"Unknown function: '{name}'");
 
             var argObjs = arguments.Select(x => (object)x).ToArray();
-            return (double)mi.Invoke(_targetObject, argObjs);
+            return (decimal)mi.Invoke(_targetObject, argObjs);
         }
     }
 }

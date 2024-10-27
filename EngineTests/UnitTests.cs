@@ -102,9 +102,9 @@ namespace UnitTests
         [Fact]
         public void Variables()
         {
-            var dict = new Dictionary<string, double>
+            var dict = new Dictionary<string, decimal>
             {
-                { "pi", Math.PI },
+                { "pi", Decimal.Parse(Math.PI.ToString()) },
                 { "r", 10 }
             };
 
@@ -113,37 +113,18 @@ namespace UnitTests
             Assert.AreEqual(Parser.Parse("2 * pi * r").Eval(ctx), 2 * Math.PI * 10);
         }
 
-        class MyFunctionContext : IContext
-        {
-            public MyFunctionContext()
-            {
-            }
-
-            public double ResolveVariable(string name)
-            {
-                throw new InvalidDataException($"Unknown variable: '{name}'");
-            }
-
-            public double CallFunction(string name, double[] arguments)
-            {
-                if (name == "rectArea")
-                {
-                    return arguments[0] * arguments[1];
-                }
-
-                if (name == "rectPerimeter")
-                {
-                    return (arguments[0] + arguments[1]) * 2;
-                }
-
-                throw new InvalidDataException($"Unknown function: '{name}'");
-            }
-        }
+       
 
         [Fact]
         public void Functions()
         {
-            var ctx = new MyFunctionContext();
+            var dict = new Dictionary<string, decimal>
+            {
+                { "pi", Decimal.Parse(Math.PI.ToString()) },
+                { "r", 10 }
+            };
+
+            var ctx = new ReflectionContext(dict);
             Assert.AreEqual(Parser.Parse("rectArea(10,20)").Eval(ctx), 200);
             Assert.AreEqual(Parser.Parse("rectPerimeter(10,20)").Eval(ctx), 60);
         }

@@ -16,7 +16,7 @@ namespace ExpressionEngine
 
         string _variableName;
 
-        public override double Eval(IContext ctx)
+        public override decimal Eval(IContext ctx)
         {
             return ctx.ResolveVariable(_variableName);
         }
