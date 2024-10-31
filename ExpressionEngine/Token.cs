@@ -12,5 +12,6 @@
         Comma,
         Identifier,
         Number,
+        Exponent
     }
 }

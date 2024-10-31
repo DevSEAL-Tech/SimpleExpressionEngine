@@ -105,15 +105,18 @@ namespace UnitTests
             var dict = new Dictionary<string, decimal>
             {
                 { "pi", Decimal.Parse(Math.PI.ToString()) },
-                { "r", 10 }
+                { "r", 10 },
+                {"EstimatedUnrealizedEquity", 2}
             };
 
             var ctx = new ReflectionContext(dict);
 
-            Assert.AreEqual(Parser.Parse("2 * pi * r").Eval(ctx), 2 * Math.PI * 10);
+            Assert.AreEqual(Parser.Parse("(2 * 2 * r) ^ EstimatedUnrealizedEquity").Eval(ctx), decimal.Parse(Math.Pow(2 * 2 * 10, 2).ToString()));
+            Assert.AreEqual(Parser.Parse("2 / 0").Eval(ctx), 0);
+
         }
 
-       
+
 
         [Fact]
         public void Functions()

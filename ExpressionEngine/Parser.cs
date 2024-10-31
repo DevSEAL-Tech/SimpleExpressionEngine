@@ -61,11 +61,11 @@ namespace ExpressionEngine
             }
         }
 
-        // Parse an sequence of add/subtract operators
+        // Parse an sequence of multiply/divide operators
         Node ParseMultiplyDivide()
         {
             // Parse the left hand side
-            var lhs = ParseUnary();
+            var lhs = ParseExponent();
 
             while (true)
             {
@@ -77,7 +77,37 @@ namespace ExpressionEngine
                 }
                 else if (_tokenizer.Token == Token.Divide)
                 {
-                    op = (a, b) => a / b;
+                    op = (a, b) => b != 0 ? a / b : 0;
+                }
+
+                // Binary operator found?
+                if (op == null)
+                    return lhs;             // no
+
+                // Skip the operator
+                _tokenizer.NextToken();
+
+                // Parse the right hand side of the expression
+                var rhs = ParseExponent();
+
+                // Create a binary node and use it as the left-hand side from now on
+                lhs = new NodeBinary(lhs, rhs, op);
+            }
+        }
+
+        // Parse an sequence of exponent operators
+        Node ParseExponent()
+        {
+            // Parse the left hand side
+            var lhs = ParseUnary();
+
+            while (true)
+            {
+                // Work out the operator
+                Func<decimal, decimal, decimal> op = null;
+                if (_tokenizer.Token == Token.Exponent)
+                {
+                    op = (a, b) => (decimal)Math.Pow((double)a, (double)b);
                 }
 
                 // Binary operator found?
@@ -94,7 +124,6 @@ namespace ExpressionEngine
                 lhs = new NodeBinary(lhs, rhs, op);
             }
         }
-
 
         // Parse a unary operator (eg: negative/positive)
         Node ParseUnary()
@@ -207,12 +236,12 @@ namespace ExpressionEngine
             }
 
             // Don't Understand
-            throw new SyntaxException($"Unexpect token: {_tokenizer.Token}");
+            throw new SyntaxException($"Unexpected token: {_tokenizer.Token}");
         }
 
 
         #region Convenience Helpers
-        
+
         // Static helper to parse a string
         public static Node Parse(string str)
         {

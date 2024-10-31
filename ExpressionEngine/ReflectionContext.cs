@@ -26,12 +26,12 @@ namespace ExpressionEngine
                 {
                     return value;
                 }
-                throw new InvalidDataException($"Unknown variable: '{name}'");
+                return 0;
             }
 
             var pi = _targetObject.GetType().GetProperty(name);
             if (pi == null)
-                throw new InvalidDataException($"Unknown variable: '{name}'");
+                return 0;
 
             return (decimal)pi.GetValue(_targetObject);
         }

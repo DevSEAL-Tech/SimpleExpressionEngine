@@ -92,6 +92,11 @@ namespace ExpressionEngine
                     NextChar();
                     _currentToken = Token.Comma;
                     return;
+
+                case '^':
+                    NextChar();
+                    _currentToken = Token.Exponent;
+                    return;
             }
 
             // Number?
